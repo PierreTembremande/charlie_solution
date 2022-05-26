@@ -4,6 +4,10 @@ h1 {
 
 .conteneur {
     display: flex;
+}
+
+.contenu{
     align-items: center;
     justify-content: center;
 }
+

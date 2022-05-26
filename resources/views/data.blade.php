@@ -1,6 +1,6 @@
 @extends('header')
 
-<h1 style="text-align:center">Tableau de données</h1>
+<h1>Tableau de données</h1>
 
 <br>
 
