@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Donnee;
-use Symfony\Component\VarDumper\VarDumper;
+use App\Models\Image;
+use App\Models\Ville;
+use App\Models\Etat;
 
 class AffichageController extends Controller
 {
@@ -25,8 +27,10 @@ class AffichageController extends Controller
              $pseudo = $exploit['results'][$result]["login"]["username"];
              $mdp = $exploit['results'][$result]["login"]["sha256"];
              $dateNaissance= $exploit['results'][$result]["dob"]["date"];
+             $dateNaissance=substr($dateNaissance,0,10);
              $age= $exploit['results'][$result]["dob"]["age"];
              $inscription= $exploit['results'][$result]["registered"]["date"];
+             $inscription = substr($inscription, 0, 10);
              $telephoneFixe= $exploit['results'][$result]["phone"];
              $telephonePortable= $exploit['results'][$result]["cell"];
              $adresse= $exploit['results'][$result]["location"]["street"];
@@ -38,10 +42,15 @@ class AffichageController extends Controller
              $imageThumbnail= $exploit['results'][$result]["picture"]["thumbnail"];
              $nationalite= $exploit['results'][$result]["nat"];
             
-            $donnee= Donnee::insertDonnee($uuid,$genre,$titre,$nom,$prenom,$dateNaissance,$age,$nationalite,$telephoneFixe,$telephonePortable,$email,$pseudo,$mdp,$inscription);
-            $image= Donnee::insertImage($imageLarge,$imageMedium,$imageThumbnail);
-            $ville= Donnee::insertVille($ville,$codePostal);
-            $etat= Donnee::insertEtat($etat);
+            $image= Image::insertImage($imageLarge,$imageMedium,$imageThumbnail);
+            $ville= Ville::insertVille($ville,$codePostal);
+            $etat= Etat::insertEtat($etat);
+
+            $dernierImage=Image::recentImage();
+            $dernierVille=Ville::recentVille();
+            $dernierEtat=Etat::recentEtat();
+
+            $donnee = Donnee::insertDonnee($uuid,$genre, $titre, $nom, $prenom, $dateNaissance, $age, $nationalite, $telephoneFixe, $telephonePortable, $email, $pseudo, $mdp, $inscription, $dernierImage->{'MAX(id)'}, $dernierVille->{'MAX(id)'},$dernierEtat->{'MAX(id)'});
         }
 
         $datas= Donnee::get();
