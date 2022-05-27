@@ -32,14 +32,17 @@
 
         foreach ($datas as $data) {
             echo "<tr>";
-            echo "<td>" . $data['nom'] . "</td>";
-            echo "<td>" . $data['prenom'] . "</td>";
-            echo "<td>" . $data['titre'] . "</td>";
-            echo "<td>" . $data['sexe'] . "</td>";
-            echo "<td>" . $data['date_de_naissance'] . "</td>";
-            echo "<td>" . $data['age'] . "</td>";
-            echo "<td>" . $data['nationalite'] . "</td>";
-            echo "<td>" . $data['email'] . "</td>";
+            echo "<td>" . $data->{'nom'} . "</td>";
+            echo "<td>" . $data->{'prenom'} . "</td>";
+            echo "<td>" . $data->{'titre'} . "</td>";
+            echo "<td>" . $data->{'sexe'} . "</td>";
+            echo "<td>" . $data->{'date_de_naissance'} . "</td>";
+            echo "<td>" . $data->{'age'} . "</td>";
+            echo "<td>" . $data->{'nationalite'} . "</td>";
+            echo "<td>" . $data->{'email'} . "</td>";
+            $id= $data->{'id'};
+            echo '<td> <input type="button" value="Modifier" onclick="modifier(`' . $id . '`)"></td>';
+            echo '<td> <input type="button" value="Supprimer" onclick="supprimer(`' . $id . '`)"></td>';
             echo "</tr>";
         }
 
@@ -50,8 +53,14 @@
 
 <script>
     function ajout() {
-           
-            window.location="/ajout";
-        
+        window.location = "/ajout";
+    }
+
+    function modifier(identifiant) {
+        window.location = "/modifier/"+identifiant;
+    }
+
+    function supprimer(identifiant) {
+        window.location="supprimer/"+identifiant;
     }
 </script>

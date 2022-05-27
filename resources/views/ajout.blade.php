@@ -81,10 +81,6 @@
                 <input type="url" name="thumbnail" id="thumbnail">
                 <br><br>
 
-                <label>Adresse</label>
-                <input type="text" name="adresse" id="adresse" placeholder="255 rue des Templiers">
-                <br><br>
-
                 <label>Ville</label>
                 <input type="text" name="ville" id="ville" placeholder="Lille">
                 <br><br>

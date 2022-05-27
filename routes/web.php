@@ -21,4 +21,6 @@ Route::get('/', function () {
 Route::get("/affichage",[AffichageController::class,"toutesLesDonnees"]);
 Route::get("/ajout", [AffichageController::class, "ajout"]);
 Route::post("/recupAjout",[AffichageController::class,"ajoutUtilisateur"]);
+Route::get('supprimer/{id}', [AffichageController::class, "suppression"]);
+Route::get('modifier/{id}', [AffichageController::class, "modification"]);
 

@@ -34,7 +34,6 @@ class AffichageController extends Controller
             $inscription = substr($inscription, 0, 10);
             $telephoneFixe = $exploit['results'][$result]["phone"];
             $telephonePortable = $exploit['results'][$result]["cell"];
-            $adresse = $exploit['results'][$result]["location"]["street"];
             $ville = $exploit['results'][$result]["location"]["city"];
             $codePostal = $exploit['results'][$result]["location"]["postcode"];
             $etat = $exploit['results'][$result]["location"]["state"];
@@ -54,7 +53,7 @@ class AffichageController extends Controller
             $donnee = Donnee::insertDonnee($uuid, $genre, $titre, $nom, $prenom, $dateNaissance, $age, $nationalite, $telephoneFixe, $telephonePortable, $email, $pseudo, $mdp, $inscription, $dernierImage->{'MAX(id)'}, $dernierVille->{'MAX(id)'}, $dernierEtat->{'MAX(id)'});
         }
 
-        $datas = Donnee::get();
+        $datas = Donnee::affichage();
         return view('data', compact('datas'));
     }
 
@@ -67,7 +66,7 @@ class AffichageController extends Controller
     public function ajoutUtilisateur()
     {
 
-        if (isset($_POST['sexe']) && isset($_POST['titre']) && isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['uuid']) && isset($_POST['email']) && isset($_POST['pseudo']) && isset($_POST['mdp']) && isset($_POST['naissance']) && isset($_POST['age']) && isset($_POST['fixe']) && isset($_POST['portable']) && isset($_POST['adresse']) && isset($_POST['ville']) && isset($_POST['code']) && isset($_POST['etat']) && isset($_POST['large']) && isset($_POST['moyen']) && isset($_POST['thumbnail']) && isset($_POST['nation'])) {
+        if (isset($_POST['sexe']) && isset($_POST['titre']) && isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['uuid']) && isset($_POST['email']) && isset($_POST['pseudo']) && isset($_POST['mdp']) && isset($_POST['naissance']) && isset($_POST['age']) && isset($_POST['fixe']) && isset($_POST['portable']) && isset($_POST['ville']) && isset($_POST['code']) && isset($_POST['etat']) && isset($_POST['large']) && isset($_POST['moyen']) && isset($_POST['thumbnail']) && isset($_POST['nation'])) {
 
             $genre = $_POST['sexe'];
             $titre = $_POST['titre'];
@@ -82,7 +81,6 @@ class AffichageController extends Controller
             $age = $_POST['age'];
             $telephoneFixe = $_POST['fixe'];
             $telephonePortable = $_POST['portable'];
-            $adresse = $_POST['adresse'];
             $ville = $_POST['ville'];
             $codePostal = $_POST['code'];
             $etat = $_POST['etat'];
@@ -105,8 +103,28 @@ class AffichageController extends Controller
 
             echo '<script>alert("Votre donnée est bien enregistrée")</script>';;
 
-            $datas = Donnee::get();
+            $datas = Donnee::affichage();
             return view('data', compact('datas'));
         }
+
+    }
+
+    public function modification($id){
+
+        $donnee = Donnee::modifier($id);
+
+        echo '<script>alert("Votre donnée est bien modifier")</script>';
+
+        $datas = Donnee::affichage();
+        return view('data', compact('datas'));
+    }
+
+    public function suppression($id){
+        
+        $donnee=Donnee::supprimer($id);
+
+        echo '<script>alert("Votre donnée est bien supprimé")</script>';
+
+        echo '<script>window.location="/affichage"</script>';
     }
 }

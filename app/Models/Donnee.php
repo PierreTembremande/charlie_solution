@@ -13,10 +13,10 @@ class donnee extends Model
     public static function insertDonnee($uuid, $genre, $titre, $nom, $prenom, $dateNaissance, $age, $nationalite, $telephoneFixe, $telephonePortable, $email, $pseudo, $mdp, $inscription, $dernierImage, $dernierVille, $dernierEtat)
     {
         DB::table('donnees')->insert([
-            'id'=>$uuid,
+            'id' => $uuid,
             'sexe' => $genre,
             'titre' => $titre,
-            'nom'=>$nom,
+            'nom' => $nom,
             'prenom' => $prenom,
             'date_de_naissance' => $dateNaissance,
             'age' => $age,
@@ -31,7 +31,24 @@ class donnee extends Model
             'villes_id' => $dernierVille,
             'etats_id' => $dernierEtat
         ]);
-
     }
 
+    public static function affichage(){
+         $sql = DB::select('SELECT id,
+                                nom,
+                                prenom,
+                                titre,
+                                sexe,
+                                date_de_naissance,
+                                age,
+                                nationalite,
+                                email 
+                            FROM donnees;');
+        return $sql;
+    }
+
+    public static function supprimer($id)
+    {
+        DB::table('donnees')->where('id', '=', $id)->delete();
+    }
 }
