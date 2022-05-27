@@ -1,5 +1,6 @@
 //Pour lancer le projet il faut lancer le serveur laravel qui à pour numéro de port 8000 (php artisan serve)
 //Il faut aussi lancer votre serveur et votre bdd (j'ai personnelement utilisé un xampp).
+//Vous trouverez l'export de ma base de donnée dans le dossier du projet
 //Ensuite il faut entrer dans l'url /affichage.
 //On est sensé obtenir l'url suivant : 127.0.0.1:8000/affichage
 //
