@@ -47,6 +47,34 @@ class donnee extends Model
         return $sql;
     }
 
+    public static function recentImage($id)
+    {
+        $sql = DB::select('SELECT images_id,
+                                villes_id,
+                                etats_id
+                            FROM donnees
+                            WHERE id LIKE"'.$id.'";');
+        return ($sql);
+    }
+
+    public static function modifier($uuid, $genre, $titre, $nom, $prenom, $dateNaissance, $age, $nationalite, $telephoneFixe, $telephonePortable, $email, $pseudo, $mdp, $inscription){
+        DB::table('donnees')->where('id', $uuid)->update([
+            'sexe' => $genre,
+            'titre' => $titre,
+            'nom' => $nom,
+            'prenom' => $prenom,
+            'date_de_naissance' => $dateNaissance,
+            'age' => $age,
+            'nationalite' => $nationalite,
+            'telephone_fixe' => $telephoneFixe,
+            'telephone_portable' => $telephonePortable,
+            'email' => $email,
+            'pseudo' => $pseudo,
+            'mdp' => $mdp,
+            'date_enregistrement' => $inscription,
+        ]);
+    }
+
     public static function supprimer($id)
     {
         DB::table('donnees')->where('id', '=', $id)->delete();

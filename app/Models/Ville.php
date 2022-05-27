@@ -24,4 +24,11 @@ class Ville extends Model
         $sql = DB::select('SELECT MAX(id) FROM villes;');
         return end($sql);
     }
+
+    public static function updateVille($ville, $codePostal, $id){
+        $sql = DB::table('villes')->where('id', $id)->update([
+            'nom' => $ville,
+            'code_postal' => $codePostal
+        ]);
+    }
 }

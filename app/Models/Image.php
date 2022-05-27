@@ -23,4 +23,13 @@ class Image extends Model
         $sql = DB::select('SELECT MAX(id) FROM images;');
         return end($sql);
     }
+
+    public static function updateImage($imageLarge, $imageMedium, $imageThumbnail, $id)
+    {
+        $sql = DB::table('images')->where('id', $id)->update([
+            'format_large' => $imageLarge,
+            'format_moyen' => $imageMedium,
+            'format_thumbnail' => $imageThumbnail
+        ]);
+    }
 }

@@ -12,9 +12,7 @@ class Etat extends Model
 
     public static function insertEtat($etat)
     {
-        $sql = DB::table('etats')->insertGetId([
-            'nom' => $etat
-        ]);
+        $sql = DB::table('etats')->insertGetId(['nom' => $etat]);
     }
 
     public static function recentEtat(){
@@ -22,5 +20,9 @@ class Etat extends Model
         $sql = DB::select('SELECT MAX(id) FROM etats;');
         return end($sql);
         
+    }
+
+    public static function updateEtat($etat, $id){
+        $sql = DB::table('etats')->where('id', $id)->update(['nom' => $etat]);
     }
 }

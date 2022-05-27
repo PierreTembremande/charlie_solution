@@ -11,5 +11,5 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
-    protected $except = ['/recupAjout'];
+    protected $except = ['/recupAjout', '/modificationUtilisateur'];
 }

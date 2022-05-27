@@ -103,25 +103,61 @@ class AffichageController extends Controller
 
             echo '<script>alert("Votre donnée est bien enregistrée")</script>';;
 
-            $datas = Donnee::affichage();
-            return view('data', compact('datas'));
+            echo '<script>window.location="/affichage"</script>';
         }
-
     }
 
-    public function modification($id){
-
-        $donnee = Donnee::modifier($id);
-
-        echo '<script>alert("Votre donnée est bien modifier")</script>';
-
-        $datas = Donnee::affichage();
-        return view('data', compact('datas'));
+    public function modification($id)
+    {
+        return view('modifier', compact('id'));
     }
 
-    public function suppression($id){
-        
-        $donnee=Donnee::supprimer($id);
+    public function recupModification()
+    {
+
+        if (isset($_POST['sexe']) && isset($_POST['titre']) && isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['uuid']) && isset($_POST['email']) && isset($_POST['pseudo']) && isset($_POST['mdp']) && isset($_POST['naissance']) && isset($_POST['age']) && isset($_POST['fixe']) && isset($_POST['portable']) && isset($_POST['ville']) && isset($_POST['code']) && isset($_POST['etat']) && isset($_POST['large']) && isset($_POST['moyen']) && isset($_POST['thumbnail']) && isset($_POST['nation'])) {
+
+            $genre = $_POST['sexe'];
+            $titre = $_POST['titre'];
+            $nom = $_POST['nom'];
+            $prenom = $_POST['prenom'];
+            $uuid = $_POST['uuid'];
+            $email = $_POST['email'];
+            $pseudo = $_POST['pseudo'];
+            $mdp = $_POST['mdp'];
+            $mdp = hash("sha256", $mdp);
+            $dateNaissance = $_POST['naissance'];
+            $age = $_POST['age'];
+            $telephoneFixe = $_POST['fixe'];
+            $telephonePortable = $_POST['portable'];
+            $ville = $_POST['ville'];
+            $codePostal = $_POST['code'];
+            $etat = $_POST['etat'];
+            $imageLarge = $_POST['large'];
+            $imageMedium = $_POST['moyen'];
+            $imageThumbnail = $_POST['thumbnail'];
+            $nationalite = $_POST['nation'];
+
+            $inscription = date("Y-m-d");
+
+            $recupDiversId=Donnee::recupId($uuid);
+
+            $image = Image::updatetImage($imageLarge, $imageMedium, $imageThumbnail, $recupDiversId->{'images_id'});
+            $ville = Ville::updateVille($ville, $codePostal, $recupDiversId->{'villes_id'});
+            $etat = Etat::updateEtat($etat, $recupDiversId->{'etats_id'});
+
+            $donnee = Donnee::modifier($uuid, $genre, $titre, $nom, $prenom, $dateNaissance, $age, $nationalite, $telephoneFixe, $telephonePortable, $email, $pseudo, $mdp, $inscription);
+
+            echo '<script>alert("Votre donnée est bien modifier")</script>';
+
+            echo '<script>window.location="/affichage"</script>';
+        }
+    }
+
+    public function suppression($id)
+    {
+
+        $donnee = Donnee::supprimer($id);
 
         echo '<script>alert("Votre donnée est bien supprimé")</script>';
 
